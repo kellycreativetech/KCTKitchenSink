@@ -1,0 +1,121 @@
+.l-header{
+    padding:0;
+
+    .l-container{position:relative;}
+}
+
+.gradient {
+    background: $primary-color; /* fallback for old browsers */
+    background: linear-gradient(to left, $primary-color , $blue2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.l-nav-wrap {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-logo{
+    display: none;
+    @include breakpoint($above-stacked){
+      display:flex;
+      margin: 0;
+      float:left;
+      font-size: 18px;
+      color: #fff;
+      opacity: 0.8;
+
+      &:hover {
+          opacity: 1;
+          color: #fff;
+      }
+    }
+}
+
+.item{
+    position:relative;
+    background: darken($primary-color, 5%);
+
+    picture, img{
+        display:block;
+        opacity: 0.3;
+
+    }
+}
+.home-carousel {
+    position: relative;
+}
+.overlay{
+    padding: 0 20px;
+    @include breakpoint($above-skinny){
+        position: absolute;
+        z-index: 100;
+        top: 50%;
+        transform: translateY(-50%);
+        left:0;
+        right: 0;
+
+    }
+    h1, h2, h3, h4, h5, h6, p, li {
+        color: #fff;
+    }
+    h1{
+        margin-top: 1em;
+    }
+    h4 {
+        max-width: 800px;
+        margin: 0.5em auto;
+    }
+}
+
+
+
+.mobile-masthead{
+    display:block;
+    @include clearfix();
+    @include breakpoint($above-stacked){
+        display:none;
+    }
+    @at-root .styleguide & {
+      display: block;
+    }
+    .mobile-logo{
+        padding: 10px 10px 0 0;
+        color: #fff;
+    }
+
+}
+
+
+.sub-mast{
+    background-color: mix($body-bg, $primary-color, 50%);
+    img{display:block;}
+}
+
+
+
+/**
+ * Note: I have omitted any vendor-prefixes for clarity.
+ * Adding them is left as an exercise for the reader.
+ */
+.headroom {
+    will-change: transform;
+    transition: transform 200ms linear;
+    position: fixed;
+    width: 100%;
+    z-index: 500;
+
+    // & + * {
+    //   padding-top: 90px;
+    // }
+
+    &--top {
+      background: none transparent;
+    }
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}

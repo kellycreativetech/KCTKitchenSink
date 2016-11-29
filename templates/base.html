@@ -1,0 +1,190 @@
+<!doctype html>
+<!--[if lte IE 8 ]><html class="old-ie" dir="ltr" lang="{{ LANGUAGE_CODE }}"><![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!--><html dir="ltr" lang="{{ LANGUAGE_CODE }}"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block meta %}
+    <meta name="description" content="">
+    <meta name="author" content="{{ site.name }}">
+    <meta name="msapplication-TileColor" content=""/>
+    {% endblock meta %}
+
+    <title>{% block site_title %}{% if page.content.title %}{{ page.content.title }}:{% endif %} {{ site.name }}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/styles.css?cacheBust0116" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:300,300i,600,600i" rel="stylesheet">
+    <script src="/static/js/min/jquery-1.11.1.min.js" type="text/javascript"></script>
+</head>
+<body class="{% block bodyclass %}{% endblock %}">
+  <div class="off-canvas-wrap">
+    <div class="mobile-masthead">
+      <button class="hamburger hamburger--spin open-panel" type="button">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+      {% block mobile-masthead-logo %}
+      <a href="/" class="mobile-logo">
+        {{ site.name }}
+        <!--<img width="100%" src="/static/img/logo.svg" onerror="this.src='/static/img/logo.png'">-->
+      </a>
+      {% endblock mobile-masthead-logo %}
+    </div>
+    <nav class="mobile-nav">
+      {% block mobile-nav %}{% endblock mobile-nav %}
+    </nav>
+    <div class="off-canvas-content-wrap">
+      {% block header-wrap %}
+      <header class="l-header gradient">
+        <nav class="sf-wrap">
+          <div class="l-container">
+            <div class="l-nav-wrap">
+              <a href="/" class="main-logo">
+                {{ site.name }}
+                <!--<img width="100%" src="/static/img/logo.svg" onerror="this.src='/static/img/logo.png'">-->
+              </a>
+              <div class="sf-menu">
+              {% menu "Navigation" %}
+                <ul class="nav" id="menu-main-nav">
+                  {% for item in tree %}
+                    <li id="menu-item-{{ item.name|slugify }}" class="{{ item.trail_class }}">
+                      <a class="{{ item.current_class }}" href="{{ item.url }}">{{ item.name }}</a>
+                        {% if item.children %}
+                        <ul>
+                            {% for citem in item.children %}
+                            <li class="{{ item.trail_class }}"><a class="{{ item.current_class }}" href="{{ citem.url }}">{{ citem.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      {% endblock header-wrap %}
+      {% block undernav %}
+      <section class="sub-mast">
+          <div class="l-container no-pad">
+              {% page "masthead_img" type=img %}
+              {% if page.content.masthead_img %}
+              <img src="{% imgix_url page.content.masthead_img %}?w=1600" data-srv-name="masthead_img" />
+              {% else %}
+              <img src="https://unsplash.it/1600/200" data-srv-name="masthead_img">
+              {% endif %}
+          </div>
+      </section>
+      {% endblock undernav %}
+
+
+{% if messages %}
+<div class="l-container">
+    <div class="success callout">
+        {% for message in messages %}
+          <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+
+{% block main-content-wrap %}
+
+<section class="v-pad white-bg">
+<div class="l-container">
+  <div class="l-two-thirds">
+    {% block content %}
+    <h1>{% page "title" %}</h1>
+    {% page "content" type="wysiwyg" %}
+
+    <ul class="thumbnails">
+    {% page_list "Photo Gallery" %}
+    {% list_item "gallery_img" type=img %}
+    {% list_item "caption" %}
+      <li>
+        <a class="fancybox" rel="fancied" href="{% imgix_url list_item.gallery_img %}?w=1200" title="{{ list_item.caption }}">
+          <img src="{% imgix_url list_item.gallery_img %}?w=200&h=200" />
+        </a>
+      </li>
+    {% end_list %}
+    </ul>
+
+  {% endblock content %}
+
+  </div>
+  <div class="l-one-third l-last">
+      <div class="well">
+        {% chunk "sidebar" %}
+      </div>
+
+  </div>
+
+</div>
+</section>
+{% endblock main-content-wrap %}
+      {% block footer-wrap %}
+      <footer class="l-footer gradient knockout">
+        <div class="l-container v-pad">
+          <div class="l-one-half">
+            {% chunk "footer" %}
+          </div>
+          <div class="l-one-half l-last">
+            <form class="glass-form" actn="/siteapi/submit_form" method="POST"  id="contact">
+              {% csrf_token %}
+              <input name="success_message" type="hidden" value="Thanks! We'll get back to you as soon as possible." />
+              <input name="to" type="hidden" value="ce195084-f3f3-4be4-8e31-6bdcaaebbaaa" />
+              <input type="hidden" name="redirect" value="/" />
+              <p><input type="text" name="Your Name" placeholder="Your Name"></p>
+              <p><input type="email" name="E-mail" placeholder="E-mail"></p>
+              <textarea name="Comments" placeholder="Comments"></textarea>
+              <button type="submit" class="btn btn-block">Send Message</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="l-container">
+          <p class="sm-foot-text">
+            &copy;{% now "Y" %}, {{ site.name }}. All rights reserved. Site by <a href="http://www.kellycreativetech.com">Kelly Creative Tech</a>.
+            {% if user.is_authenticated %}
+            {% if user.is_staff %}
+            <a href="/admin/">Site Admin</a>
+            {% endif %}
+            {% else %}
+            <a href="/admin/">Log&nbsp;in</a>
+            {% endif %}
+          </p>
+        </div>
+      </footer>
+      {% endblock footer-wrap %}
+    </div><!--/.off-canvas-content-wrap -->
+  </div><!-- /.off-canvas-wrap - wrapper for everything -->
+    {% block scripts %}
+
+    <script src="/static/js/min/scripts-min.js"></script>
+    {% endblock %}
+    <!--
+                           KK  Lll.  LLLL
+    .KKKKKKKK.            KK .L.  ..L.. .
+              ..K       KK  L..   LL
+                K.   KK.   L.   .LL.
+              KK. KK      ..    LL.   l
+            KK.KK.        L.   LL    l
+         KK..K..         .LL l.LL  l
+       KK.  .K.   eee.   LL.   LL.
+     KK.     .K. ee.. .L...    L.
+               K eeee..   LLL..L  Lllyyyy.
+                                        .Y.
+    Site by                              .Y
+    KellyCreativeTech.com                 y
+                                         Y.
+                                        .y
+                                       .y
+                                      .Y
+                                     y              -->
+
+  </body>
+</html>

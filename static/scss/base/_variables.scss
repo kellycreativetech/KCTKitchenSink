@@ -1,0 +1,76 @@
+// This is how you override the global grid
+// @include span(4 of 24 1/8);
+
+// breakpoint variables
+$above-stacked: 690px;
+$above-skinny: 767px;
+$above-normal: 985px;
+$above-normal-plus: 1100px;
+$above-wide: 1400px;
+$above-wide-plus: 1460px;
+
+$above-stacked-only: $above-stacked $above-skinny - 1;
+$skinny-only: $above-skinny $above-normal - 1;
+$normal-only: $above-normal $above-wide - 1;
+
+//colors
+
+
+$purple: #3A217A;
+$red: #FD513D;
+$blue: #3a7bd5;
+$blue2: #00d2ff;
+$beige: #f0ead1;
+$brown: #513527;
+$green: #1abc9c;
+$orange: #FE6135;
+$tint: mix($blue, #fff, 95%);
+$shade: #0a280b;
+
+
+%overlay-dark{
+	background-color: $brown;
+	background-color: rgba($brown, 0.8);
+}
+//mix($tint, $primary-color, 60%)
+
+//color keywords
+$primary-color: $blue;
+$secondary-color: $green;
+$text-color: #555;
+$link-color: $primary-color;
+
+//global styles
+$body-bg: $tint;
+$selection-color: #fff;
+$selection-bg: $primary-color;
+
+$well-bg: $tint;
+$well-border: $well-bg;
+$well-padding: 10px;
+
+//type and important global styles
+$base-font-size: 1.6;
+$base-line-height: 1.4;
+$base-font-family: 'Libre Franklin', sans-serif;
+$paragraph-font-weight: 300; //400 and 700 are also installed
+$paragraph-font-size: 2.0; //this uses the rem-calc mixin
+$small-paragraph-font-size: 2.0;
+
+$alt-font-family: $base-font-family;
+$header-font-family: $base-font-family;
+$header-font-weight: 300;
+$header-line-height: 1.2;
+$header-color: $primary-color;
+$header-link-color: $link-color;
+$header-link-color-hover: shade($header-link-color, 30%);
+$header-link-color-active: shade($header-link-color-hover, 30%);
+
+$button-font-family: $header-font-family;
+
+
+// Hamburger menu options
+$hamburger-layer-color: $tint;
+$hamburger-layer-width: 30px;
+$hamburger-layer-height: 2px;
+$hamburger-types: (spin);

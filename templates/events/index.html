@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    {% load inlines %}
+        {% children as events order_by="-published" %}
+        {% autopaginate events 10 %}
+            {% for event in events %}
+            <div class="clearfix">
+                <div class="date">
+                    <span class="month">{{ event.start|date:"F" }}</span>
+                    <span class="day">{{ event.start|date:"j" }}</span>
+                </div>
+
+                <h2><a href="/{{ event.path }}" class="post-link">{{ event.content.title }}</a></h2>
+                <p class="teaser">{{ event.content.content|safe|truncatewords_html:100 }}</p>
+                <p class="more"><a href="/{{ event.path }}" class="post-link">read more...</a></p>
+            </div>
+            {% empty %}
+            <p>No Messages have been posted yet.</p>
+
+            {% endfor %}
+
+
+            {% paginate %}
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main-content-wrap %}
+<section class="l-main main-subpage-content-area">
+  <div class="l-container">
+	<div class="date">
+      <span class="month">{{ page.start|date:"F" }}</span>
+      <span class="day">{{ page.start|date:"j" }}</span>
+    </div>
+
+  	<h1>{% page "title" %}</h1>
+    <div class="main l-two-thirds">
+      {% page "content" type="wysiwyg" %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main-content-wrap %}
+<section class="l-main main-subpage-content-area">
+  <div class="l-container">
+  	<h1>{% page "title" %}</h1>
+<p class="post_dateline">
+    {% if page.published %}{{ page.published|date:"jS F Y" }}{% else %}Not published yet{% endif %}
+</p>
+    <div class="main l-two-thirds">
+      {% page "content" type="wysiwyg" %}
+    </div>
+  </div>
+</section>
+{% endblock %}

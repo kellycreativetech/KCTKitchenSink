@@ -1,0 +1,13 @@
+{
+    "password": "kasey",
+    "email": "kasey@servee.com",
+    "site": {
+        "domain": "kctkitchensink",
+        "use_temp_domain": true,
+        "glass_meta": {},
+        "created": "2016-09-22T21:43:29.428004+00:00",
+        "name": "KCT Kitchen Sink",
+        "id": "ec9201f6-f816-4de2-8b42-276d8026d882",
+        "other_domains": []
+    }
+}

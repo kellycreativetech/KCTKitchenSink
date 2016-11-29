@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    {% load inlines %}
+        {% children as posts order_by="-published" %}
+        {% autopaginate posts 10 %}
+            {% for post in posts %}
+                <h2><a href="/{{ post.path }}" class="post-link">{{ post.content.title }}</a></h2>
+                <p class="teaser">{{ post.content.content|safe|truncatewords_html:100 }}</p>
+                <p class="more"><a href="/{{ post.path }}" class="post-link">read more...</a></p>
+            {% empty %}
+            <p>No Messages have been posted yet.</p>
+            {% endfor %}
+
+            {% paginate %}
+{% endblock content %}

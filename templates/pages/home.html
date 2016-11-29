@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block bodyclass %}home{% endblock %}
+
+{% block undernav %}
+ {% include "includes/masthead-gallery.html" %}
+
+{% endblock undernav %}
+
+{% block main-content-wrap %}
+<section class="l-main main-subpage-content-area white-bg">
+  <div class="l-container">
+    <div class="main l-two-thirds">
+
+      {% block content %}
+      <h1 class="subpage-head">{% page "Main_Headline" type="text" placeholder="Insert main page headline here" %}</h1>
+      {% page "Content" type="wysiwyg" placeholder="Insert Content here" %}
+      {% endblock content %}
+    </div>
+    <aside class="l-one-third l-last text-center">
+      {% block sidebar %}
+        {% page "main_content_img" type=img %}
+        {% if page.content.main_content_img %}
+        <img src="{% imgix_url page.content.main_content_img %}?w=500" />
+        {% else %}
+        <img src="https://unsplash.it/500/350" data-srv-name="main_content_img">
+        {% endif %}
+
+      {% endblock sidebar %}
+    </aside>
+  </div>
+</section>
+
+<section class="l-container l-main">
+  <div class="l-one-half">
+    <h6>Recent News</h6>
+    {% children as "posts" parent="news" limit=1 %}
+    {% for post in posts %}
+    <h4><a href="/{{ post.path }}">{{ post.content.title }}</a></h2>
+    {{ post.content.content|truncatewords_html:20|safe }}
+    {% endfor %}
+
+    <p><small><a href="/news">See older articles</a></small></p>
+  </div>
+  <div class="l-one-half l-last">
+
+    <h6>Upcoming Events</h6>
+    {% children as "events" parent="events" limit=1 %}
+    {% for event in events %}
+    <div class="clearfix">
+    <div class="date">
+      <span class="month">{{ event.start|date:"F" }}</span>
+      <span class="day">{{ event.start|date:"j" }}</span>
+    </div>
+    <h4><a href="/{{ event.path }}">{{ event.content.title }}</a></h2>
+    {{ event.content.content|truncatewords_html:20|safe }}
+    </div>
+    {% endfor %}
+
+    <p><small><a href="/events">See full calendar</a></small></p>
+
+
+  </div>
+</section>
+{% endblock main-content-wrap %}
