@@ -6,7 +6,7 @@
 
 .gradient {
     background: $primary-color; /* fallback for old browsers */
-    background: linear-gradient(to left, $primary-color , $blue2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to left, $primary-color, $blue2);
 }
 
 .l-nav-wrap {
@@ -86,31 +86,29 @@
 
 }
 
-
 .sub-mast{
     background-color: mix($body-bg, $primary-color, 50%);
     img{display:block;}
 }
-
-
 
 /**
  * Note: I have omitted any vendor-prefixes for clarity.
  * Adding them is left as an exercise for the reader.
  */
 .headroom {
-    will-change: transform;
-    transition: transform 200ms linear;
+    will-change: transform, background;
+    transition: transform 200ms linear, background 400ms ease-in-out;
     position: fixed;
     width: 100%;
     z-index: 500;
+    background: rgba($blue, 100%);
 
     // & + * {
     //   padding-top: 90px;
     // }
 
     &--top {
-      background: none transparent;
+      background: rgba($blue, 0);
     }
 }
 .headroom--pinned {

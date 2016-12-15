@@ -2,17 +2,18 @@
 
 <section class="home-carousel">
     <div class="carousel">
-
+      {% comment %}
       {% page_list "Masthead Gallery" %}
         {% list_item "gallery_img" type=img %}
         <div class="item">
           <img src="{% imgix_url list_item.gallery_img %}?w=1600&h=600" />
         </div>
       {% end_list %}
+      {% endcomment %}
 
       {% if not page.content.masthead_img %}
         <div class="item">
-          <img src="https://unsplash.it/1600/600" data-srv-name="masthead_img">
+          <img src="https://placem.at/places?w=1600&h=600" data-srv-name="masthead_img">
         </div>
       {% endif %}
     </div>

@@ -52,7 +52,7 @@ img{max-width: 100%;}
   }
 }
 //breakpoint settings
-$breakpoint-no-query-fallbacks: true;
+@include breakpoint-set('no query fallbacks', true);
 
 @mixin clearfix {
   &:after {

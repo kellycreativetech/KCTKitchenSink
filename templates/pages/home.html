@@ -19,10 +19,11 @@
     <aside class="l-one-third l-last text-center">
       {% block sidebar %}
         {% page "main_content_img" type=img %}
-        {% if page.content.main_content_img %}
-        <img src="{% imgix_url page.content.main_content_img %}?w=500" />
-        {% else %}
-        <img src="https://unsplash.it/500/350" data-srv-name="main_content_img">
+        {% if page.content.main_content_img or editing %}
+        <img
+          class=""
+          src="{% if page.content.main_content_img %}{% imgix_url page.content.main_content_img %}{% elif editing %}https://placem.at/places{% endif %}?w=500&h=500" data-srv-name="main_content_img"
+        />
         {% endif %}
 
       {% endblock sidebar %}

@@ -1,0 +1,44 @@
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>Sunday Sermons from Grace Summit Community Church</title>
+        <description>Weekly Messages from Grace Summit, Cuyahoga Falls, Ohio</description>
+
+        <itunes:subtitle>Weekly Messages from Grace Summit Community Church in Cuyahoga Falls, Ohio. Learn more at GraceSummit.org</itunes:subtitle>
+        <itunes:author>Grace Summit Community Church</itunes:author>
+
+        <link>https://www.gracesummit.org/Messages/</link>
+        <language>en-us</language>
+        <pubDate>{{ feed_updated|date:"D, d M Y H:i:s O" }}</pubDate>
+
+        <lastBuildDate>{{ feed_updated|date:"D, d M Y H:i:s O" }}</lastBuildDate>
+        <managingEditor>kasey@servee.com (Kasey Kelly)</managingEditor>
+        <webMaster>kasey@servee.com (Kasey Kelly)</webMaster>
+        <category>Religion</category>
+
+        <itunes:category text="Religion &amp; Spirituality">
+            <itunes:category text="Christianity" />
+        </itunes:category>
+
+        <itunes:image href="/static/icons/apple-touch-icon.png" />
+        <itunes:owner>
+            <itunes:name>Kasey Kelly</itunes:name>
+            <itunes:email>kasey@servee.com</itunes:email>
+        </itunes:owner>
+        <itunes:explicit>clean</itunes:explicit>
+
+
+        {% load inlines %}
+        {% children as posts order_by="-published" %}
+            {% for post in posts %}
+                <item>
+                    <title>{{ post.content.title }}</title>
+                    <link>{{ site.domain }}/{{ post.path }}</link>
+                    <guid>{{ site.domain }}/{{ post.path }}</guid>
+                    <description>{{ post.content.content|safe|truncatewords_html:75 }}</description>
+                    <pubDate>{{ page.published|date:"D, d M Y H:i:s O" }}</pubDate>
+                    {% if page.content.audio %}<enclosure url="{{ site.domain }}{{ page.content.audio.url }}" length="{{ page.content.audio.size }}" type="audio/mpeg"/>{% endif %}
+                    <source url="{{ site.domain }}Messages/feed" />
+                </item>
+            {% endfor %}
+    </channel>
+</rss>

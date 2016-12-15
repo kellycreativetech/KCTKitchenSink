@@ -37,7 +37,7 @@
     </nav>
     <div class="off-canvas-content-wrap">
       {% block header-wrap %}
-      <header class="l-header gradient">
+      <header class="l-header">
         <nav class="sf-wrap">
           <div class="l-container">
             <div class="l-nav-wrap">
@@ -70,12 +70,13 @@
       {% block undernav %}
       <section class="sub-mast">
           <div class="l-container no-pad">
-              {% page "masthead_img" type=img %}
-              {% if page.content.masthead_img %}
-              <img src="{% imgix_url page.content.masthead_img %}?w=1600" data-srv-name="masthead_img" />
-              {% else %}
-              <img src="https://unsplash.it/1600/200" data-srv-name="masthead_img">
-              {% endif %}
+            {% page "masthead_img" type=img %}
+            {% if page.content.masthead_img or editing %}
+            <img
+              class=""
+              src="{% if page.content.masthead_img %}{% imgix_url page.content.masthead_img %}{% elif editing %}https://placem.at/places{% endif %}?w=1600&h=300" data-srv-name="masthead_img"
+            />
+            {% endif %}
           </div>
       </section>
       {% endblock undernav %}

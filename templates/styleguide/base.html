@@ -1,91 +1,59 @@
 {% extends "base.html" %}
 
-
 {% block header-wrap %}{% endblock header-wrap %}
 {% block undernav %}{% endblock %}
 {% block footer-wrap %}{% endblock %}
-
 {% block bodyclass %}styleguide{% endblock %}
 
 {% block mobile-masthead-logo %}
-<a href="/" class="mobile-logo">
-  {{ site.name }} Styleguide
-</a>
+<a href="/" class="mobile-logo"> {{ site.name }} Styleguide </a>
 {% endblock mobile-masthead-logo %}
 
-
 {% block mobile-nav %}
-
 {% menu "Styleguide" %}
-  <ul class="nav">
+<ul class="nav">
     {% for item in tree %}
-      <li id="menu-item-{{ item.name|slugify }}" class="{{ item.trail_class }}">
+    <li id="menu-item-{{ item.name|slugify }}" class="{{ item.trail_class }}">
         <a class="{{ item.current_class }}" href="{{ item.url }}">{{ item.name }}</a>
-          {% if item.children %}
-          <ul>
-              {% for citem in item.children %}
-              <li class="{{ item.trail_class }}"><a class="{{ item.current_class }}" href="{{ citem.url }}">{{ citem.name }}</a></li>
-              {% endfor %}
-          </ul>
-          {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+        {% if item.children %}
+            <ul>
+            {% for citem in item.children %}
+            <li class="{{ item.trail_class }}">
+                <a class="{{ item.current_class }}" href="{{ citem.url }}">{{ citem.name }}</a>
+            </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </li>
+        {% endfor %}
+        </ul>
 {% endblock mobile-nav %}
 
 {% block main-content-wrap %}
-
 <div style="padding: 100px 0;">
-{% block styleguide-content %}
+
+{% if request.GET.t %}
+  {% with "includes/"|add:request.GET.t|add:".html" as template and request.GET.t|add:"_title" as module_title and request.GET.t|add:"_content" as module_content %}
 
   <div class="l-container">
-    <h1>{% page "title" %}</h1>
-    <div>{% page "content" type="wysiwyg" %}</div>
+    <h1>{% page module_title %}</h1>
+    <div>{% page module_content type="wysiwyg" %}</div>
   </div>
 
-{% block example %}
-{% include "includes/masthead-gallery.html" %}
+  {% include template %}
 
-{% endblock example %}
-
-
-{% block codeblock %}
-<div class="l-container v-pad">
-<textarea style='font: 11px/1.2 Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-'>
-
-
-{% comment %}
-{% block example %}
-
-<!-- e.g. page.path == masthead-gallery -->
-
-<!-- page.path == /styleguide -->
-<!-- /styleguide#masthead-gallery -->
-<!-- /styleguide?t_name=masthead-gallery -->
-
-{% with "includes/"|concat:request.GET.t_name|concat:".html" as template_name %}
-{% chunk template_name %}
-{% include template_name %}
-<code class="markitup">{% raw_include template_name %}
+  <div class="l-container">
+  <pre style='font: 11px/1.2 Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace; background: #fff;border:1px solid #eee;padding:10px;'>
+    {% include_escape template %}
+  </pre>
+  </div>
 {% endwith %}
-
-{% endblock example %}
-
-
-
-
-{% endcomment %}
-</textarea>
+{% else %}
+<div class="l-container">
+  <h1>{% page "title" %}</h1>
+  <div>{% page "content" type="wysiwyg" %}</div>
 </div>
-{% endblock %}
-
-
-{% endblock styleguide-content %}
+{% endif %}
 </div>
+
 {% endblock main-content-wrap %}
-
-
-{% block scripts %}
-{{ block.super }}
-{% endblock %}
